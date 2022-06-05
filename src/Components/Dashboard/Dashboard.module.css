@@ -1,0 +1,14 @@
+.Dashboard {
+  padding: 15px;
+}
+
+.Overview {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Overview h1 {
+  font-size: 30px;
+}

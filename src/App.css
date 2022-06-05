@@ -1,0 +1,50 @@
+:root {
+  --primary: #b31524;
+  --secondary: rgb(223, 76, 76);
+  --off-white: rgba(238, 238, 238, 0.96);
+  --black: black;
+  --white: white;
+
+  --sidebar-width: 240px;
+}
+.row-flex {
+  display: flex;
+  flex-direction: row;
+}
+.col-flex {
+  display: flex;
+  flex-direction: column;
+}
+.space-between {
+  justify-content: space-between;
+}
+.app {
+  min-height: 100vh;
+}
+main,
+aside {
+  height: auto;
+}
+
+/* navbar styles */
+.rs-navbar-default {
+  background-color: var(--primary);
+  color: var(--white);
+}
+.rs-navbar-brand {
+  color: var(--white);
+  font-weight: bold;
+  font-size: 1.5em;
+  padding: 12px 20px;
+  width: var(--sidebar-width);
+}
+.rs-navbar-item {
+  font-weight: 700;
+}
+.rs-sidenav {
+  height: 100%;
+}
+svg.rs-sidenav-item-icon {
+  margin: 0 15px -4px -35px;
+  font-size: 1.1em;
+}

@@ -1,7 +1,10 @@
+import "rsuite/dist/rsuite.min.css";
 import "./App.css";
 
+import Layout from "./Components/Layout/Layout";
+
 function App() {
-  return <div className="App">Hello World!!</div>;
+  return <Layout />;
 }
 
 export default App;
