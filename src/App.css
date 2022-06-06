@@ -32,6 +32,10 @@ main,
 aside {
   height: auto;
 }
+.gray-box {
+  border: 1px solid var(--dull-grey);
+  border-radius: "5px";
+}
 
 /* navbar styles */
 .rs-navbar-default {
