@@ -13,3 +13,8 @@
   font-size: 24px;
   color: var(--light-gray);
 }
+
+.subHeading {
+  font-size: 1.1em;
+  margin-top: 15px;
+}
