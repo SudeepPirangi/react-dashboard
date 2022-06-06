@@ -2,6 +2,8 @@ import React from "react";
 import { Sidenav, Nav } from "rsuite";
 import { FaLaptop, FaLayerGroup, FaShoppingBasket, FaUserFriends, FaRegFileAlt, FaRegSun } from "react-icons/fa";
 
+import Copyright from "../CommonUI/Copyright";
+
 function Sidebar() {
   const [expanded, setExpanded] = React.useState(true);
   const [activeKey, setActiveKey] = React.useState("1");
@@ -37,24 +39,3 @@ function Sidebar() {
   );
 }
 export default Sidebar;
-
-const Copyright = ({ expanded }) => {
-  const styles = {
-    copyright: {
-      position: "absolute",
-      bottom: 0,
-      padding: "0 10px",
-      zIndex: 1,
-    },
-    h3: { fontSize: "0.9rem", lineHeight: "inherit" },
-    span: { fontSize: "0.7rem" },
-  };
-  return (
-    expanded && (
-      <div style={styles.copyright}>
-        <h3 style={styles.h3}>CorkOwl</h3>
-        <span style={styles.span}>&copy;2020 CorkOwl. All Rights Reserved.</span>
-      </div>
-    )
-  );
-};

@@ -59,6 +59,12 @@ aside {
 .rs-sidenav-item-active .rs-sidenav-item-icon {
   fill: var(--primary);
 }
+.rs-btn {
+  font-weight: bold;
+}
+svg:not(:root) {
+  margin-bottom: -2px;
+}
 svg.rs-sidenav-item-icon {
   margin: 0 15px -4px -35px;
   font-size: 1.1em;

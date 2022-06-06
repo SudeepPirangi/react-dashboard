@@ -3,6 +3,7 @@ import { Button } from "rsuite";
 import { FaRegPlusSquare } from "react-icons/fa";
 
 import OrderTiles from "./OrderTiles";
+import SalesDetail from "./SalesDetail/SalesDetail";
 import styles from "./Dashboard.module.css";
 
 function Dashboard() {
@@ -16,6 +17,10 @@ function Dashboard() {
       </div>
 
       <OrderTiles />
+
+      <h2 style={{ fontSize: "1.1em", marginTop: "15px" }}>Sales detail</h2>
+
+      <SalesDetail />
     </div>
   );
 }

@@ -30,7 +30,7 @@ export default SimpleNavbar;
 
 const NamedAvatar = () => {
   return (
-    <span className="row-flex" styles={{ alignItems: "center" }}>
+    <span className="row-flex" style={{ alignItems: "center" }}>
       Sudeep Pirangi &nbsp; <Avatar size="sm" circle src="https://avatars.githubusercontent.com/u/2797600" alt="@posebear1990" />
     </span>
   );

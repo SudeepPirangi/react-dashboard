@@ -1,0 +1,64 @@
+.salesHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.salesHeader > div {
+  padding: 10px;
+}
+
+.customDropdown {
+  padding-left: 0;
+  padding-right: 15px;
+  background-color: var(--white);
+}
+
+.customDropdown .rs-dropdown-toggle {
+  color: var(--black);
+  font-weight: bold;
+}
+
+.horizontalRuler {
+  width: calc(100% - 20px);
+  margin: 10px auto 0;
+}
+.verticalRuler {
+  height: initial;
+}
+
+.visualData {
+  width: 75%;
+  padding: 10px;
+}
+.graphTotal {
+  font-size: 3em;
+  font-weight: bold;
+  color: var(--black);
+}
+.metrics {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 20px 10px;
+  font-weight: bold;
+}
+.totalProfit {
+  color: var(--light-gray);
+}
+.profitFigure {
+  color: brown;
+  font-size: 2em;
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+.profitPercent {
+  color: var(--green);
+  margin-bottom: 40px;
+}
+.totalSold {
+  margin-top: 10px;
+  font-size: 2em;
+  font-weight: bold;
+  color: var(--black);
+}
