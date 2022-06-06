@@ -4,6 +4,13 @@
   --off-white: rgba(238, 238, 238, 0.96);
   --black: black;
   --white: white;
+  --primary-active: #b3152411;
+  --light-gray: gray;
+  --dull-grey: #ddd;
+  --yellow: rgb(224, 195, 70);
+  --blue: rgb(111, 160, 227);
+  --green: rgb(56, 205, 56);
+  --red: rgb(244, 128, 128);
 
   --sidebar-width: 240px;
 }
@@ -43,6 +50,14 @@ aside {
 }
 .rs-sidenav {
   height: 100%;
+}
+.rs-sidenav-item-active {
+  color: var(--primary) !important;
+  background-color: var(--primary-active) !important;
+  border-right: 4px solid var(--primary);
+}
+.rs-sidenav-item-active .rs-sidenav-item-icon {
+  fill: var(--primary);
 }
 svg.rs-sidenav-item-icon {
   margin: 0 15px -4px -35px;

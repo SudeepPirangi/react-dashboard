@@ -1,0 +1,51 @@
+.tile {
+  border: 1px solid var(--dull-grey);
+  border-top: 4px solid green;
+  border-radius: 5px;
+  padding: 10px;
+  width: 23% !important;
+  box-shadow: 0px 3px 6px 2px var(--dull-grey);
+}
+
+.tileInfo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.tile:nth-child(1) {
+  border-top-color: var(--yellow);
+}
+.tile:nth-child(1) svg {
+  fill: var(--yellow);
+}
+.tile:nth-child(2) {
+  border-top-color: var(--blue);
+}
+.tile:nth-child(2) svg {
+  fill: var(--blue);
+}
+.tile:nth-child(3) {
+  border-top-color: var(--green);
+}
+.tile:nth-child(3) svg {
+  fill: var(--green);
+}
+.tile:nth-child(4) {
+  border-top-color: var(--red);
+}
+.tile:nth-child(4) svg {
+  fill: var(--red);
+}
+
+.tileInfo svg {
+  font-size: 1.5em;
+}
+
+.tileData {
+  font-weight: bold;
+  font-size: 1.2em;
+  color: var(--black);
+}
