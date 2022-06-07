@@ -1,49 +1,77 @@
 import React from "react";
-import { Table } from "rsuite";
-import { FaRegPlusSquare, FaPlus, FaMinus } from "react-icons/fa";
+import { Table, Checkbox } from "rsuite";
 
-import styles from "./Inventory.module.css";
+import CheckBoxCell from "./CheckBoxCell";
+import CustomerCell from "./CustomerCell";
+import ExpandCell from "./ExpandCell";
+import ExpandedRow from "./ExpandedRow";
 
 const { Column, Cell, HeaderCell } = Table;
 
 const rowKey = "id";
-const ExpandCell = ({ rowData, dataKey, expandedRowKeys, onChange, ...props }) => (
-  <Cell {...props}>
-    <FaRegPlusSquare
-      size="xs"
-      appearance="subtle"
-      onClick={() => {
-        onChange(rowData);
-      }}
-      icon={expandedRowKeys.some((key) => key === rowData[rowKey]) ? <FaPlus /> : <FaMinus />}
-    />
-  </Cell>
-);
-
-const renderRowExpanded = (rowData) => {
-  return (
-    <div>
-      <div
-        style={{
-          width: 60,
-          height: 60,
-          float: "left",
-          marginRight: 10,
-          background: "#eee",
-        }}
-      >
-        <img src={rowData.avartar} alt="avatar" style={{ width: 60 }} />
-      </div>
-      <p>{rowData.email}</p>
-      <p>{rowData.date}</p>
-    </div>
-  );
-};
 
 function Inventory() {
   const data = fakeData.filter((v, i) => i < 5);
-  const [expandedRowKeys, setExpandedRowKeys] = React.useState([]);
+  const [expandedRowKeys, setExpandedRowKeys] = React.useState([1]);
 
+  const [sortColumn, setSortColumn] = React.useState();
+  const [sortType, setSortType] = React.useState();
+  const [loading, setLoading] = React.useState(false);
+
+  const [checkedKeys, setCheckedKeys] = React.useState([]);
+  let checked = false;
+  let indeterminate = false;
+
+  // sorting helpers
+  const getData = () => {
+    if (sortColumn && sortType) {
+      return data.sort((a, b) => {
+        let x = a[sortColumn];
+        let y = b[sortColumn];
+        if (typeof x === "string") {
+          x = x.charCodeAt();
+        }
+        if (typeof y === "string") {
+          y = y.charCodeAt();
+        }
+        if (sortType === "asc") {
+          return x - y;
+        } else {
+          return y - x;
+        }
+      });
+    }
+    return data;
+  };
+
+  const handleSortColumn = (sortColumn, sortType) => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setSortColumn(sortColumn);
+      setSortType(sortType);
+    }, 500);
+  };
+
+  // checkbox helpers
+  if (checkedKeys.length === data.length) {
+    checked = true;
+  } else if (checkedKeys.length === 0) {
+    checked = false;
+  } else if (checkedKeys.length > 0 && checkedKeys.length < data.length) {
+    indeterminate = true;
+  }
+
+  const handleCheckAll = (value, checked) => {
+    const keys = checked ? data.map((item) => item.id) : [];
+    setCheckedKeys(keys);
+  };
+  const handleCheck = (value, checked) => {
+    const keys = checked ? [...checkedKeys, value] : checkedKeys.filter((item) => item !== value);
+    setCheckedKeys(keys);
+  };
+
+  // expand helper
   const handleExpanded = (rowData, dataKey) => {
     let open = false;
     const nextExpandedRowKeys = [];
@@ -62,41 +90,61 @@ function Inventory() {
 
     setExpandedRowKeys(nextExpandedRowKeys);
   };
+
   return (
-    <div className={styles.something}>
+    <div style={{ marginBottom: "50px" }}>
       <Table
-        height={300}
-        data={data}
+        height={550}
+        data={getData()}
+        sortColumn={sortColumn}
+        sortType={sortType}
+        onSortColumn={handleSortColumn}
+        loading={loading}
         rowKey={rowKey}
         expandedRowKeys={expandedRowKeys}
         onRowClick={(data) => {
           console.log(data);
         }}
-        renderRowExpanded={renderRowExpanded}
+        renderRowExpanded={ExpandedRow}
+        rowExpandedHeight={250}
       >
-        <Column width={70} align="center">
-          <HeaderCell>#</HeaderCell>
-          <ExpandCell dataKey="id" expandedRowKeys={expandedRowKeys} onChange={handleExpanded} />
+        <Column width={50} align="center" fixed>
+          <HeaderCell style={{ padding: 0 }}>
+            <div style={{ lineHeight: "40px" }}>
+              <Checkbox inline checked={checked} indeterminate={indeterminate} onChange={handleCheckAll} />
+            </div>
+          </HeaderCell>
+          <CheckBoxCell dataKey="id" checkedKeys={checkedKeys} onChange={handleCheck} />
         </Column>
 
-        <Column width={130}>
-          <HeaderCell>First Name</HeaderCell>
-          <Cell dataKey="firstName" />
+        <Column width={300} fixed>
+          <HeaderCell>Customer</HeaderCell>
+          <CustomerCell dataKey="id" />
         </Column>
 
-        <Column width={130}>
+        <Column width={130} sortable>
           <HeaderCell>Last Name</HeaderCell>
           <Cell dataKey="lastName" />
         </Column>
 
-        <Column width={200}>
+        <Column width={200} sortable>
           <HeaderCell>City</HeaderCell>
           <Cell dataKey="city" />
         </Column>
 
-        <Column width={200}>
+        <Column width={200} sortable>
           <HeaderCell>Street</HeaderCell>
           <Cell dataKey="street" />
+        </Column>
+
+        <Column width={200} sortable>
+          <HeaderCell>Company</HeaderCell>
+          <Cell dataKey="companyName" />
+        </Column>
+
+        <Column width={50} align="center" fixed>
+          <HeaderCell>&nbsp;</HeaderCell>
+          <ExpandCell dataKey="id" expandedRowKeys={expandedRowKeys} onChange={handleExpanded} />
         </Column>
       </Table>
     </div>
@@ -106,25 +154,25 @@ function Inventory() {
 const fakeData = [
   {
     id: 1,
-    avartar: "https://via.placeholder.com/40x40/3498ff/FFFFFF?text=E",
-    city: "New Amieshire",
-    email: "Leora13@yahoo.com",
-    firstName: "Ernest Schuppe SchuppeSchuppeSchuppeSchuppeSchuppeSchuppe Schuppe",
-    lastName: "Schuppe",
-    street: "Ratke Port",
-    zipCode: "17026-3154",
-    date: "2016-09-23T07:57:40.195Z",
-    bs: "global drive functionalities",
-    catchPhrase: "Intuitive impactful software",
-    companyName: "Lebsack - Nicolas",
-    words: "saepe et omnis",
-    sentence: "Quos aut sunt id nihil qui.",
-    stars: 820,
-    followers: 70,
+    avatar: "https://via.placeholder.com/40x40/3498ff/FFFFFF?text=M",
+    city: "East Dejuan",
+    email: "Enrico_Beer@yahoo.com",
+    firstName: "Margret",
+    lastName: "Heller",
+    street: "Gunner Drive",
+    zipCode: "17423-9317",
+    date: "2017-03-13T21:09:47.253Z",
+    bs: "wireless morph synergies",
+    catchPhrase: "Profit-focused radical help-desk",
+    companyName: "Corwin, Maggio and Wintheiser",
+    words: "temporibus possimus neque",
+    sentence: "Eum amet ea non natus qui assumenda illo officia qui.",
+    stars: 9920,
+    followers: 570,
   },
   {
     id: 2,
-    avartar: "https://via.placeholder.com/40x40/3498ff/FFFFFF?text=J",
+    avatar: "https://via.placeholder.com/40x40/3498ff/FFFFFF?text=J",
     city: "New Gust",
     email: "Mose_Gerhold51@yahoo.com",
     firstName: "Janis",
@@ -142,7 +190,7 @@ const fakeData = [
   },
   {
     id: 3,
-    avartar: "https://via.placeholder.com/40x40/3498ff/FFFFFF?text=M",
+    avatar: "https://via.placeholder.com/40x40/3498ff/FFFFFF?text=M",
     city: "Lefflerstad",
     email: "Frieda.Sauer61@gmail.com",
     firstName: "Makenzie",
@@ -160,7 +208,7 @@ const fakeData = [
   },
   {
     id: 4,
-    avartar: "https://via.placeholder.com/40x40/3498ff/FFFFFF?text=C",
+    avatar: "https://via.placeholder.com/40x40/3498ff/FFFFFF?text=C",
     city: "East Catalina",
     email: "Eloisa.OHara@hotmail.com",
     firstName: "Ciara",
@@ -178,7 +226,7 @@ const fakeData = [
   },
   {
     id: 5,
-    avartar: "https://via.placeholder.com/40x40/3498ff/FFFFFF?text=S",
+    avatar: "https://via.placeholder.com/40x40/3498ff/FFFFFF?text=S",
     city: "Ritchieborough",
     email: "Brisa46@hotmail.com",
     firstName: "Suzanne",
